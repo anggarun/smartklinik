@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smartklinik/model/poli.dart';
 import 'package:smartklinik/ui/poli/poli_form.dart';
+import 'package:smartklinik/widgets/sidebar.dart';
 import 'poli_item.dart';
 
 class PoliPage extends StatefulWidget {
@@ -13,6 +14,7 @@ class _PoliPageState extends State<PoliPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Sidebar(),
       appBar: AppBar(
         title: const Text("Data Poli"),
         actions: [

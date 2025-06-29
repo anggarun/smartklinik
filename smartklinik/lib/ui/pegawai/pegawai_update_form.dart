@@ -1,28 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:smartklinik/model/pegawai.dart';
-import 'package:smartklinik/ui/pegawai/pegawai_detail.dart';
+import '../../model/pegawai.dart';
+import 'pegawai_detail.dart';
 
-class PegawaiForm extends StatefulWidget {
-  const PegawaiForm({super.key});
+class PegawaiUpdateForm extends StatefulWidget {
+  final Pegawai pegawai;
+  const PegawaiUpdateForm({super.key, required this.pegawai});
 
   @override
-  State<PegawaiForm> createState() => _PegawaiFormState();
+  State<PegawaiUpdateForm> createState() => _PegawaiUpdateFormState();
 }
 
-class _PegawaiFormState extends State<PegawaiForm> {
+class _PegawaiUpdateFormState extends State<PegawaiUpdateForm> {
   final _formKey = GlobalKey<FormState>();
   final _nipCtrl = TextEditingController();
   final _namaCtrl = TextEditingController();
-  final _tanggalLahirCtrl = TextEditingController();
+  final _tglLahirCtrl = TextEditingController();
   final _telpCtrl = TextEditingController();
   final _emailCtrl = TextEditingController();
   final _passwordCtrl = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    _nipCtrl.text = widget.pegawai.nip;
+    _namaCtrl.text = widget.pegawai.nama;
+    _tglLahirCtrl.text = widget.pegawai.tanggal_lahir;
+    _telpCtrl.text = widget.pegawai.nomor_telepon;
+    _emailCtrl.text = widget.pegawai.email;
+    _passwordCtrl.text = widget.pegawai.password;
+  }
+
+  @override
   void dispose() {
     _nipCtrl.dispose();
     _namaCtrl.dispose();
-    _tanggalLahirCtrl.dispose();
+    _tglLahirCtrl.dispose();
     _telpCtrl.dispose();
     _emailCtrl.dispose();
     _passwordCtrl.dispose();
@@ -32,7 +44,7 @@ class _PegawaiFormState extends State<PegawaiForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Tambah Pegawai')),
+      appBar: AppBar(title: Text('Ubah Pegawai')),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16),
         child: Form(
@@ -40,15 +52,10 @@ class _PegawaiFormState extends State<PegawaiForm> {
           child: Column(
             children: [
               _fieldInput("NIP", _nipCtrl),
-              SizedBox(height: 16),
               _fieldInput("Nama Pegawai", _namaCtrl),
-              SizedBox(height: 16),
               _fieldTanggalLahir(),
-              SizedBox(height: 16),
               _fieldInput("Nomor Telepon", _telpCtrl),
-              SizedBox(height: 16),
               _fieldInput("Email", _emailCtrl),
-              SizedBox(height: 16),
               _fieldInput("Password", _passwordCtrl, isPassword: true),
               SizedBox(height: 24),
               _tombolSimpan(),
@@ -64,35 +71,41 @@ class _PegawaiFormState extends State<PegawaiForm> {
     TextEditingController ctrl, {
     bool isPassword = false,
   }) {
-    return TextField(
-      controller: ctrl,
-      obscureText: isPassword,
-      decoration: InputDecoration(labelText: label),
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: TextField(
+        controller: ctrl,
+        obscureText: isPassword,
+        decoration: InputDecoration(labelText: label),
+      ),
     );
   }
 
   Widget _fieldTanggalLahir() {
-    return TextField(
-      controller: _tanggalLahirCtrl,
-      readOnly: true,
-      decoration: InputDecoration(
-        labelText: "Tanggal Lahir",
-        suffixIcon: Icon(Icons.calendar_today),
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: TextField(
+        controller: _tglLahirCtrl,
+        readOnly: true,
+        decoration: InputDecoration(
+          labelText: "Tanggal Lahir",
+          suffixIcon: Icon(Icons.calendar_today),
+        ),
+        onTap: () async {
+          DateTime? picked = await showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1900),
+            lastDate: DateTime(2100),
+          );
+          if (picked != null) {
+            setState(() {
+              _tglLahirCtrl.text =
+                  "${picked.day}/${picked.month}/${picked.year}";
+            });
+          }
+        },
       ),
-      onTap: () async {
-        DateTime? picked = await showDatePicker(
-          context: context,
-          initialDate: DateTime.now(),
-          firstDate: DateTime(1900),
-          lastDate: DateTime(2100),
-        );
-        if (picked != null) {
-          setState(() {
-            _tanggalLahirCtrl.text =
-                "${picked.day}/${picked.month}/${picked.year}";
-          });
-        }
-      },
     );
   }
 
@@ -102,7 +115,7 @@ class _PegawaiFormState extends State<PegawaiForm> {
         Pegawai pegawai = Pegawai(
           nip: _nipCtrl.text,
           nama: _namaCtrl.text,
-          tanggal_lahir: _tanggalLahirCtrl.text,
+          tanggal_lahir: _tglLahirCtrl.text,
           nomor_telepon: _telpCtrl.text,
           email: _emailCtrl.text,
           password: _passwordCtrl.text,
@@ -114,7 +127,7 @@ class _PegawaiFormState extends State<PegawaiForm> {
           ),
         );
       },
-      child: Text("Simpan"),
+      child: const Text("Simpan Perubahan"),
     );
   }
 }
