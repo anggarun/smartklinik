@@ -3,11 +3,7 @@ import 'package:smartklinik/model/pegawai.dart';
 
 class PegawaiDetail extends StatefulWidget {
   final Pegawai pegawai;
-  const PegawaiDetail({
-    super.key,
-    required this.pegawai,
-    required Pegawai Pegawai,
-  });
+  const PegawaiDetail({super.key, required this.pegawai});
 
   @override
   State<PegawaiDetail> createState() => _PegawaiDetailState();

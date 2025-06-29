@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smartklinik/model/pegawai.dart';
 import 'package:smartklinik/ui/pegawai/pegawai_detail.dart';
+import 'package:smartklinik/ui/pegawai/pegawai_form.dart';
 
 class PegawaiPage extends StatefulWidget {
   const PegawaiPage({super.key});
@@ -12,7 +13,21 @@ class _PegawaiPageState extends State<PegawaiPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Data Pegawai")),
+      appBar: AppBar(
+        title: const Text("Data Pegawai"),
+        actions: [
+          GestureDetector(
+            child: Icon(Icons.add),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PegawaiForm()),
+              );
+            },
+          ),
+        ],
+      ),
+
       body: ListView(
         children: [
           GestureDetector(
@@ -30,8 +45,7 @@ class _PegawaiPageState extends State<PegawaiPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>
-                      PegawaiDetail(pegawai: pegawai, Pegawai: pegawai),
+                  builder: (context) => PegawaiDetail(pegawai: pegawai),
                 ),
               );
             },

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smartklinik/model/pasien.dart';
 import 'package:smartklinik/ui/pasien/pasien_detail.dart';
+import 'package:smartklinik/ui/pasien/pasien_form.dart';
 
 class PasienPage extends StatefulWidget {
   const PasienPage({super.key});
@@ -12,7 +13,20 @@ class _PasienPageState extends State<PasienPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Data Pasien")),
+      appBar: AppBar(
+        title: const Text("Data Pasien"),
+        actions: [
+          GestureDetector(
+            child: Icon(Icons.add),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PasienForm()),
+              );
+            },
+          ),
+        ],
+      ),
       body: ListView(
         children: [
           GestureDetector(
@@ -29,8 +43,7 @@ class _PasienPageState extends State<PasienPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>
-                      PasienDetail(pasien: pasien, Pasien: Pasien),
+                  builder: (context) => PasienDetail(pasien: pasien),
                 ),
               );
             },

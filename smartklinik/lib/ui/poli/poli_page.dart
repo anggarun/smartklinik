@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smartklinik/model/poli.dart';
-import 'package:smartklinik/ui/poli/poli_detail.dart';
+import 'package:smartklinik/ui/poli/poli_form.dart';
+import 'poli_item.dart';
 
 class PoliPage extends StatefulWidget {
   const PoliPage({super.key});
@@ -12,21 +13,26 @@ class _PoliPageState extends State<PoliPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Data Poli")),
-      body: ListView(
-        children: [
+      appBar: AppBar(
+        title: const Text("Data Poli"),
+        actions: [
           GestureDetector(
-            child: Card(child: ListTile(title: const Text("Poli Anak"))),
+            child: Icon(Icons.add),
             onTap: () {
-              Poli poliAnak = Poli(namaPoli: "Poli Anak");
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => PoliDetail(poli: poliAnak),
-                ),
+                MaterialPageRoute(builder: (context) => PoliForm()),
               );
             },
           ),
+        ],
+      ),
+      body: ListView(
+        children: [
+          PoliItem(poli: Poli(namaPoli: "Poli Anak")),
+          PoliItem(poli: Poli(namaPoli: "Poli Kandungan")),
+          PoliItem(poli: Poli(namaPoli: "Poli Gigi")),
+          PoliItem(poli: Poli(namaPoli: "Poli THT")),
         ],
       ),
     );

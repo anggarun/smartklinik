@@ -3,7 +3,7 @@ import '../../model/pasien.dart';
 
 class PasienDetail extends StatefulWidget {
   final Pasien pasien;
-  const PasienDetail({super.key, required this.pasien, required Type Pasien});
+  const PasienDetail({super.key, required this.pasien});
 
   @override
   State<PasienDetail> createState() => _PasienDetailState();
